@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Suppliers Manager for WooCommerce 2.1.1\n"
 "Report-Msgid-Bugs-To: info@goldenbath.gr\n"
 "POT-Creation-Date: 2025-10-27 12:00:00+00:00\n"
-"PO-Revision-Date: 2025-10-27 12:00+0200\n"
+"PO-Revision-Date: 2025-10-28 18:14+0200\n"
 "Last-Translator: Mike Lvd <info@goldenbath.gr>\n"
 "Language-Team: Greek <info@goldenbath.gr>\n"
 "Language: el_GR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.6\n"
 "X-Domain: suppliers-manager-for-woocommerce\n"
 
 #. Plugin Name of the plugin
@@ -312,3 +312,33 @@ msgstr "Απεστάλη Στις"
 
 msgid "No email history found."
 msgstr "Δεν βρέθηκε ιστορικό email."
+
+msgid "Advanced Settings"
+msgstr "Προηγμένες Ρυθμίσεις"
+
+msgid "Configure advanced plugin behavior and data management."
+msgstr "Ρυθμίστε την προηγμένη συμπεριφορά του plugin και τη διαχείριση δεδομένων."
+
+msgid "Delete Data on Uninstall"
+msgstr "Διαγραφή Δεδομένων κατά την Απεγκατάσταση"
+
+msgid "Delete all plugin data when uninstalling"
+msgstr "Διαγραφή όλων των δεδομένων του plugin κατά την απεγκατάσταση"
+
+msgid "When enabled, all plugin data will be permanently deleted when you uninstall the plugin, including:"
+msgstr "Όταν είναι ενεργοποιημένο, όλα τα δεδομένα του plugin θα διαγραφούν μόνιμα όταν απεγκαταστήσετε το plugin, συμπεριλαμβανομένων:"
+
+msgid "All supplier posts and their metadata"
+msgstr "Όλων των καταχωρήσεων προμηθευτών και των μεταδεδομένων τους"
+
+msgid "Product-supplier relationships"
+msgstr "Των σχέσεων προϊόντων-προμηθευτών"
+
+msgid "Email history logs"
+msgstr "Του ιστορικού αποστολής email"
+
+msgid "Plugin settings and configuration"
+msgstr "Των ρυθμίσεων και διαμόρφωσης του plugin"
+
+msgid "Warning: This action cannot be undone. Make sure to backup your data before uninstalling."
+msgstr "Προειδοποίηση: Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Βεβαιωθείτε ότι έχετε δημιουργήσει αντίγραφο ασφαλείας των δεδομένων σας πριν την απεγκατάσταση."

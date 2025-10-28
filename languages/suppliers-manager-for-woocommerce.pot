@@ -1,17 +1,18 @@
 # Copyright (C) 2025 Mike Lvd
 # This file is distributed under the GPL v2 or later.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Suppliers Manager for WooCommerce 2.1.1\n"
 "Report-Msgid-Bugs-To: info@goldenbath.gr\n"
-"POT-Creation-Date: 2025-10-27 12:00:00+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-10-28 18:13+0200\n"
 "PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
 "X-Domain: suppliers-manager-for-woocommerce\n"
 
 #. Plugin Name of the plugin
@@ -24,7 +25,9 @@ msgid "https://goldenbath.gr/"
 msgstr ""
 
 #. Description of the plugin
-msgid "Manage product suppliers and send automated email notifications to suppliers when orders are placed."
+msgid ""
+"Manage product suppliers and send automated email notifications to suppliers "
+"when orders are placed."
 msgstr ""
 
 #. Author of the plugin
@@ -32,16 +35,24 @@ msgid "Mike Lvd"
 msgstr ""
 
 #: suppliers-manager-for-woocommerce.php
-msgid "Suppliers Manager for WooCommerce requires PHP %2$s or higher. You are running PHP %1$s."
+msgid ""
+"Suppliers Manager for WooCommerce requires PHP %2$s or higher. You are "
+"running PHP %1$s."
 msgstr ""
 
-msgid "Suppliers Manager for WooCommerce requires WordPress %2$s or higher. You are running WordPress %1$s."
+msgid ""
+"Suppliers Manager for WooCommerce requires WordPress %2$s or higher. You are "
+"running WordPress %1$s."
 msgstr ""
 
-msgid "Suppliers Manager for WooCommerce requires WooCommerce to be installed and activated."
+msgid ""
+"Suppliers Manager for WooCommerce requires WooCommerce to be installed and "
+"activated."
 msgstr ""
 
-msgid "Suppliers Manager for WooCommerce requires WooCommerce %2$s or higher. You are running WooCommerce %1$s."
+msgid ""
+"Suppliers Manager for WooCommerce requires WooCommerce %2$s or higher. You "
+"are running WooCommerce %1$s."
 msgstr ""
 
 #: admin/class-admin.php
@@ -114,7 +125,9 @@ msgstr ""
 msgid "Supplier Order Notification"
 msgstr ""
 
-msgid "Email notifications sent to suppliers when orders containing their products are placed."
+msgid ""
+"Email notifications sent to suppliers when orders containing their products "
+"are placed."
 msgstr ""
 
 msgid "New order #{order_number} from {site_title}"
@@ -158,7 +171,9 @@ msgstr ""
 msgid "Hello %s,"
 msgstr ""
 
-msgid "A new order has been placed with products from your inventory. Please find the order details below:"
+msgid ""
+"A new order has been placed with products from your inventory. Please find "
+"the order details below:"
 msgstr ""
 
 msgid "Order #%s"
@@ -210,7 +225,9 @@ msgstr ""
 msgid "Send a copy of all supplier emails to admin"
 msgstr ""
 
-msgid "When enabled, a copy of each supplier notification will be sent to the admin email address."
+msgid ""
+"When enabled, a copy of each supplier notification will be sent to the admin "
+"email address."
 msgstr ""
 
 msgid "Admin Email Address"
@@ -225,7 +242,9 @@ msgstr ""
 msgid "Keep a log of all sent supplier emails"
 msgstr ""
 
-msgid "When enabled, all supplier notifications will be logged in the database for future reference."
+msgid ""
+"When enabled, all supplier notifications will be logged in the database for "
+"future reference."
 msgstr ""
 
 msgid "History Retention Period"
@@ -234,7 +253,9 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-msgid "Email history older than this will be automatically deleted. Default: 90 days."
+msgid ""
+"Email history older than this will be automatically deleted. Default: 90 "
+"days."
 msgstr ""
 
 msgid "Save Settings"
@@ -277,9 +298,6 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-msgid "All Suppliers"
-msgstr ""
-
 msgid "All Statuses"
 msgstr ""
 
@@ -308,4 +326,38 @@ msgid "Sent At"
 msgstr ""
 
 msgid "No email history found."
+msgstr ""
+
+msgid "Advanced Settings"
+msgstr ""
+
+msgid "Configure advanced plugin behavior and data management."
+msgstr ""
+
+msgid "Delete Data on Uninstall"
+msgstr ""
+
+msgid "Delete all plugin data when uninstalling"
+msgstr ""
+
+msgid ""
+"When enabled, all plugin data will be permanently deleted when you uninstall "
+"the plugin, including:"
+msgstr ""
+
+msgid "All supplier posts and their metadata"
+msgstr ""
+
+msgid "Product-supplier relationships"
+msgstr ""
+
+msgid "Email history logs"
+msgstr ""
+
+msgid "Plugin settings and configuration"
+msgstr ""
+
+msgid ""
+"Warning: This action cannot be undone. Make sure to backup your data before "
+"uninstalling."
 msgstr ""

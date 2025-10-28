@@ -77,114 +77,141 @@ class Settings
     {
         // Register settings
         register_setting(
-            self::OPTION_GROUP,
-            'smfw_notification_status',
-            [
-                'type'              => 'string',
-                'sanitize_callback' => 'sanitize_text_field',
-                'default'           => 'processing',
-            ]
+                self::OPTION_GROUP,
+                'smfw_notification_status',
+                [
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                        'default'           => 'processing',
+                ]
         );
 
         register_setting(
-            self::OPTION_GROUP,
-            'smfw_enable_email_history',
-            [
-                'type'              => 'string',
-                'sanitize_callback' => [$this, 'sanitize_checkbox'],
-                'default'           => '1',
-            ]
+                self::OPTION_GROUP,
+                'smfw_enable_email_history',
+                [
+                        'type'              => 'string',
+                        'sanitize_callback' => [$this, 'sanitize_checkbox'],
+                        'default'           => '1',
+                ]
         );
 
         register_setting(
-            self::OPTION_GROUP,
-            'smfw_bcc_admin',
-            [
-                'type'              => 'string',
-                'sanitize_callback' => [$this, 'sanitize_checkbox'],
-                'default'           => '1',
-            ]
+                self::OPTION_GROUP,
+                'smfw_bcc_admin',
+                [
+                        'type'              => 'string',
+                        'sanitize_callback' => [$this, 'sanitize_checkbox'],
+                        'default'           => '1',
+                ]
         );
 
         register_setting(
-            self::OPTION_GROUP,
-            'smfw_admin_email',
-            [
-                'type'              => 'string',
-                'sanitize_callback' => 'sanitize_email',
-                'default'           => get_option('admin_email'),
-            ]
+                self::OPTION_GROUP,
+                'smfw_admin_email',
+                [
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_email',
+                        'default'           => get_option('admin_email'),
+                ]
         );
 
         register_setting(
-            self::OPTION_GROUP,
-            'smfw_history_retention_days',
-            [
-                'type'              => 'integer',
-                'sanitize_callback' => 'absint',
-                'default'           => 90,
-            ]
+                self::OPTION_GROUP,
+                'smfw_history_retention_days',
+                [
+                        'type'              => 'integer',
+                        'sanitize_callback' => 'absint',
+                        'default'           => 90,
+                ]
+        );
+
+        register_setting(
+                self::OPTION_GROUP,
+                'smfw_delete_data_on_uninstall',
+                [
+                        'type'              => 'string',
+                        'sanitize_callback' => [$this, 'sanitize_checkbox'],
+                        'default'           => 'no',
+                ]
         );
 
         // General Settings Section
         add_settings_section(
-            'smfw_general_section',
-            __('General Settings', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_general_section'],
-            self::PAGE_SLUG
+                'smfw_general_section',
+                __('General Settings', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_general_section'],
+                self::PAGE_SLUG
         );
 
         // Email History Section
         add_settings_section(
-            'smfw_history_section',
-            __('Email History Settings', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_history_section'],
-            self::PAGE_SLUG
+                'smfw_history_section',
+                __('Email History Settings', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_history_section'],
+                self::PAGE_SLUG
+        );
+
+        // Advanced Settings Section
+        add_settings_section(
+                'smfw_advanced_section',
+                __('Advanced Settings', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_advanced_section'],
+                self::PAGE_SLUG
         );
 
         // Order Status Field
         add_settings_field(
-            'smfw_notification_status',
-            __('Notification Order Status', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_status_field'],
-            self::PAGE_SLUG,
-            'smfw_general_section'
+                'smfw_notification_status',
+                __('Notification Order Status', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_status_field'],
+                self::PAGE_SLUG,
+                'smfw_general_section'
         );
 
         // BCC Admin Field
         add_settings_field(
-            'smfw_bcc_admin',
-            __('Send Copy to Admin', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_bcc_field'],
-            self::PAGE_SLUG,
-            'smfw_general_section'
+                'smfw_bcc_admin',
+                __('Send Copy to Admin', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_bcc_field'],
+                self::PAGE_SLUG,
+                'smfw_general_section'
         );
 
         // Admin Email Field
         add_settings_field(
-            'smfw_admin_email',
-            __('Admin Email Address', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_admin_email_field'],
-            self::PAGE_SLUG,
-            'smfw_general_section'
+                'smfw_admin_email',
+                __('Admin Email Address', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_admin_email_field'],
+                self::PAGE_SLUG,
+                'smfw_general_section'
         );
 
         // Enable History Field
         add_settings_field(
-            'smfw_enable_email_history',
-            __('Enable Email History', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_history_enable_field'],
-            self::PAGE_SLUG,
-            'smfw_history_section'
+                'smfw_enable_email_history',
+                __('Enable Email History', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_history_enable_field'],
+                self::PAGE_SLUG,
+                'smfw_history_section'
         );
 
         // History Retention Field
         add_settings_field(
-            'smfw_history_retention_days',
-            __('History Retention Period', 'suppliers-manager-for-woocommerce'),
-            [$this, 'render_retention_field'],
-            self::PAGE_SLUG,
-            'smfw_history_section'
+                'smfw_history_retention_days',
+                __('History Retention Period', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_retention_field'],
+                self::PAGE_SLUG,
+                'smfw_history_section'
+        );
+
+        // Delete Data on Uninstall Field
+        add_settings_field(
+                'smfw_delete_data_on_uninstall',
+                __('Delete Data on Uninstall', 'suppliers-manager-for-woocommerce'),
+                [$this, 'render_delete_data_field'],
+                self::PAGE_SLUG,
+                'smfw_advanced_section'
         );
     }
 
@@ -193,10 +220,21 @@ class Settings
      *
      * @since  2.1.0
      * @param  mixed $value Input value
-     * @return string '1' or '0'
+     * @return string '1' or '0' for standard checkboxes, 'yes' or 'no' for specific cases
      */
     public function sanitize_checkbox($value): string
     {
+        // Check if this is the delete_data_on_uninstall field (needs 'yes'/'no')
+        if (isset($_POST['smfw_delete_data_on_uninstall']) && $value === 'yes') {
+            return 'yes';
+        }
+
+        // For delete_data_on_uninstall, return 'no' if not checked
+        if (current_filter() === 'sanitize_option_smfw_delete_data_on_uninstall') {
+            return ($value === 'yes') ? 'yes' : 'no';
+        }
+
+        // Standard '1'/'0' for other checkboxes
         return ($value === '1' || $value === 1 || $value === true || $value === 'yes') ? '1' : '0';
     }
 
@@ -324,7 +362,7 @@ class Settings
     {
         $value = get_option('smfw_admin_email', get_option('admin_email'));
         ?>
-        <input type="email" name="smfw_admin_email" id="smfw_admin_email" 
+        <input type="email" name="smfw_admin_email" id="smfw_admin_email"
                value="<?php echo esc_attr($value); ?>" class="regular-text">
         <p class="description">
             <?php esc_html_e('Email address to receive copies of supplier notifications.', 'suppliers-manager-for-woocommerce'); ?>
@@ -366,12 +404,56 @@ class Settings
     {
         $value = get_option('smfw_history_retention_days', 90);
         ?>
-        <input type="number" name="smfw_history_retention_days" id="smfw_history_retention_days" 
+        <input type="number" name="smfw_history_retention_days" id="smfw_history_retention_days"
                value="<?php echo esc_attr($value); ?>" min="1" max="365" class="small-text">
         <?php esc_html_e('days', 'suppliers-manager-for-woocommerce'); ?>
         <p class="description">
             <?php esc_html_e('Email history older than this will be automatically deleted. Default: 90 days.', 'suppliers-manager-for-woocommerce'); ?>
         </p>
+        <?php
+    }
+
+    /**
+     * Render advanced section description
+     *
+     * @since  3.0.0
+     * @return void
+     */
+    public function render_advanced_section(): void
+    {
+        echo '<p>' . esc_html__('Configure advanced plugin behavior and data management.', 'suppliers-manager-for-woocommerce') . '</p>';
+    }
+
+    /**
+     * Render delete data on uninstall field
+     *
+     * @since  3.0.0
+     * @return void
+     */
+    public function render_delete_data_field(): void
+    {
+        $value = get_option('smfw_delete_data_on_uninstall', 'no');
+        $checked = ($value === 'yes' || $value === '1' || $value === 1 || $value === true);
+        ?>
+        <fieldset>
+            <label>
+                <input type="hidden" name="smfw_delete_data_on_uninstall" value="no">
+                <input type="checkbox" name="smfw_delete_data_on_uninstall" value="yes" <?php checked($checked, true); ?>>
+                <?php esc_html_e('Delete all plugin data when uninstalling', 'suppliers-manager-for-woocommerce'); ?>
+            </label>
+            <p class="description" style="margin-top: 10px;">
+                <?php esc_html_e('When enabled, all plugin data will be permanently deleted when you uninstall the plugin, including:', 'suppliers-manager-for-woocommerce'); ?>
+            </p>
+            <ul style="margin-left: 20px; margin-top: 8px; list-style-type: disc;">
+                <li><?php esc_html_e('All supplier posts and their metadata', 'suppliers-manager-for-woocommerce'); ?></li>
+                <li><?php esc_html_e('Product-supplier relationships', 'suppliers-manager-for-woocommerce'); ?></li>
+                <li><?php esc_html_e('Email history logs', 'suppliers-manager-for-woocommerce'); ?></li>
+                <li><?php esc_html_e('Plugin settings and configuration', 'suppliers-manager-for-woocommerce'); ?></li>
+            </ul>
+            <p class="description" style="margin-top: 10px; color: #d63638; font-weight: 600;">
+                ⚠️ <?php esc_html_e('Warning: This action cannot be undone. Make sure to backup your data before uninstalling.', 'suppliers-manager-for-woocommerce'); ?>
+            </p>
+        </fieldset>
         <?php
     }
 }

@@ -142,20 +142,28 @@ class Email_History
             <!-- Filters -->
             <form method="get" action="">
                 <input type="hidden" name="page" value="<?php echo esc_attr(self::PAGE_SLUG); ?>">
-                
+
                 <div class="tablenav top">
                     <div class="alignleft actions">
                         <select name="supplier_id">
                             <option value=""><?php esc_html_e('All Suppliers', 'suppliers-manager-for-woocommerce'); ?></option>
                             <?php
-                            $suppliers = get_terms(['taxonomy' => 'supplier', 'hide_empty' => false]);
-                            if (!is_wp_error($suppliers)) {
+                            // Get suppliers from Custom Post Type (v3.0.0+)
+                            $suppliers = get_posts([
+                                    'post_type'      => 'supplier',
+                                    'post_status'    => ['publish', 'draft'], // Include both active and inactive
+                                    'posts_per_page' => -1,
+                                    'orderby'        => 'title',
+                                    'order'          => 'ASC',
+                            ]);
+
+                            if (!empty($suppliers)) {
                                 foreach ($suppliers as $supplier) {
                                     printf(
-                                        '<option value="%d" %s>%s</option>',
-                                        esc_attr($supplier->term_id),
-                                        selected($supplier_id, $supplier->term_id, false),
-                                        esc_html($supplier->name)
+                                            '<option value="%d" %s>%s</option>',
+                                            esc_attr($supplier->ID),
+                                            selected($supplier_id, $supplier->ID, false),
+                                            esc_html($supplier->post_title)
                                     );
                                 }
                             }
@@ -169,7 +177,7 @@ class Email_History
                         </select>
 
                         <input type="submit" class="button" value="<?php esc_attr_e('Filter', 'suppliers-manager-for-woocommerce'); ?>">
-                        
+
                         <?php if ($order_id || $supplier_id || $status) : ?>
                             <a href="<?php echo esc_url(admin_url('admin.php?page=' . self::PAGE_SLUG)); ?>" class="button">
                                 <?php esc_html_e('Clear Filters', 'suppliers-manager-for-woocommerce'); ?>
