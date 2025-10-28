@@ -1,0 +1,311 @@
+# Copyright (C) 2025 Mike Lvd
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Suppliers Manager for WooCommerce 2.1.1\n"
+"Report-Msgid-Bugs-To: info@goldenbath.gr\n"
+"POT-Creation-Date: 2025-10-27 12:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: suppliers-manager-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+msgid "Suppliers Manager for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://goldenbath.gr/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Manage product suppliers and send automated email notifications to suppliers when orders are placed."
+msgstr ""
+
+#. Author of the plugin
+msgid "Mike Lvd"
+msgstr ""
+
+#: suppliers-manager-for-woocommerce.php
+msgid "Suppliers Manager for WooCommerce requires PHP %2$s or higher. You are running PHP %1$s."
+msgstr ""
+
+msgid "Suppliers Manager for WooCommerce requires WordPress %2$s or higher. You are running WordPress %1$s."
+msgstr ""
+
+msgid "Suppliers Manager for WooCommerce requires WooCommerce to be installed and activated."
+msgstr ""
+
+msgid "Suppliers Manager for WooCommerce requires WooCommerce %2$s or higher. You are running WooCommerce %1$s."
+msgstr ""
+
+#: admin/class-admin.php
+msgctxt "taxonomy general name"
+msgid "Suppliers"
+msgstr ""
+
+msgctxt "taxonomy singular name"
+msgid "Supplier"
+msgstr ""
+
+msgid "Search Suppliers"
+msgstr ""
+
+msgid "All Suppliers"
+msgstr ""
+
+msgid "Parent Supplier"
+msgstr ""
+
+msgid "Parent Supplier:"
+msgstr ""
+
+msgid "Edit Supplier"
+msgstr ""
+
+msgid "Update Supplier"
+msgstr ""
+
+msgid "Add New Supplier"
+msgstr ""
+
+msgid "New Supplier Name"
+msgstr ""
+
+msgid "Telephone"
+msgstr ""
+
+msgid "The supplier's telephone number"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "The supplier's email address (required for notifications)"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "The supplier's physical address"
+msgstr ""
+
+msgid "Primary Contact"
+msgstr ""
+
+msgid "The supplier's primary contact person"
+msgstr ""
+
+msgid "Notify supplier on low stock"
+msgstr ""
+
+msgid "Check this to notify the supplier when this product is out of stock"
+msgstr ""
+
+msgid "Notify suppliers"
+msgstr ""
+
+#: includes/emails/class-supplier-email.php
+msgid "Supplier Order Notification"
+msgstr ""
+
+msgid "Email notifications sent to suppliers when orders containing their products are placed."
+msgstr ""
+
+msgid "New order #{order_number} from {site_title}"
+msgstr ""
+
+msgid "New Order Notification"
+msgstr ""
+
+msgid "Enable/Disable"
+msgstr ""
+
+msgid "Enable this email notification"
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Available placeholders: %s"
+msgstr ""
+
+msgid "Email heading"
+msgstr ""
+
+msgid "Additional content"
+msgstr ""
+
+msgid "Text to appear below the order table."
+msgstr ""
+
+msgid "N/A"
+msgstr ""
+
+msgid "Email type"
+msgstr ""
+
+msgid "Choose format for the email to be sent."
+msgstr ""
+
+#: templates/emails/supplier-notification.php
+#: templates/emails/plain/supplier-notification.php
+msgid "Hello %s,"
+msgstr ""
+
+msgid "A new order has been placed with products from your inventory. Please find the order details below:"
+msgstr ""
+
+msgid "Order #%s"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "If you have any questions, please contact us at %s"
+msgstr ""
+
+msgid "Thank you for your continued partnership."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Suppliers Manager Settings"
+msgstr ""
+
+msgid "Suppliers Manager"
+msgstr ""
+
+msgid "General Settings"
+msgstr ""
+
+msgid "Configure when and how supplier notifications are sent."
+msgstr ""
+
+msgid "Email History Settings"
+msgstr ""
+
+msgid "Manage email history and logging settings."
+msgstr ""
+
+msgid "Notification Order Status"
+msgstr ""
+
+msgid "Select the order status that triggers supplier notifications."
+msgstr ""
+
+msgid "Send Copy to Admin"
+msgstr ""
+
+msgid "Send a copy of all supplier emails to admin"
+msgstr ""
+
+msgid "When enabled, a copy of each supplier notification will be sent to the admin email address."
+msgstr ""
+
+msgid "Admin Email Address"
+msgstr ""
+
+msgid "Email address to receive copies of supplier notifications."
+msgstr ""
+
+msgid "Enable Email History"
+msgstr ""
+
+msgid "Keep a log of all sent supplier emails"
+msgstr ""
+
+msgid "When enabled, all supplier notifications will be logged in the database for future reference."
+msgstr ""
+
+msgid "History Retention Period"
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "Email history older than this will be automatically deleted. Default: 90 days."
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Quick Links"
+msgstr ""
+
+msgid "View Email History"
+msgstr ""
+
+msgid "Manage Suppliers"
+msgstr ""
+
+msgid "Email Template Settings"
+msgstr ""
+
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: admin/class-email-history.php
+msgid "Supplier Email History"
+msgstr ""
+
+msgid "Email History"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Total Sent"
+msgstr ""
+
+msgid "This Month"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "All Suppliers"
+msgstr ""
+
+msgid "All Statuses"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Clear Filters"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Recipient"
+msgstr ""
+
+msgid "Items"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Sent At"
+msgstr ""
+
+msgid "No email history found."
+msgstr ""

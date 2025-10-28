@@ -1,0 +1,314 @@
+# Copyright (C) 2025 Mike Lvd
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Suppliers Manager for WooCommerce 2.1.1\n"
+"Report-Msgid-Bugs-To: info@goldenbath.gr\n"
+"POT-Creation-Date: 2025-10-27 12:00:00+00:00\n"
+"PO-Revision-Date: 2025-10-27 12:00+0200\n"
+"Last-Translator: Mike Lvd <info@goldenbath.gr>\n"
+"Language-Team: Greek <info@goldenbath.gr>\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4\n"
+"X-Domain: suppliers-manager-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+msgid "Suppliers Manager for WooCommerce"
+msgstr "Διαχειριστής Προμηθευτών για WooCommerce"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://goldenbath.gr/"
+msgstr "https://goldenbath.gr/"
+
+#. Description of the plugin
+msgid "Manage product suppliers and send automated email notifications to suppliers when orders are placed."
+msgstr "Διαχειριστείτε προμηθευτές προϊόντων και στείλτε αυτόματες ειδοποιήσεις email στους προμηθευτές όταν γίνονται παραγγελίες."
+
+#. Author of the plugin
+msgid "Mike Lvd"
+msgstr "Mike Lvd"
+
+#: suppliers-manager-for-woocommerce.php
+msgid "Suppliers Manager for WooCommerce requires PHP %2$s or higher. You are running PHP %1$s."
+msgstr "Το Suppliers Manager for WooCommerce απαιτεί PHP %2$s ή νεότερη έκδοση. Χρησιμοποιείτε PHP %1$s."
+
+msgid "Suppliers Manager for WooCommerce requires WordPress %2$s or higher. You are running WordPress %1$s."
+msgstr "Το Suppliers Manager for WooCommerce απαιτεί WordPress %2$s ή νεότερη έκδοση. Χρησιμοποιείτε WordPress %1$s."
+
+msgid "Suppliers Manager for WooCommerce requires WooCommerce to be installed and activated."
+msgstr "Το Suppliers Manager for WooCommerce απαιτεί το WooCommerce να είναι εγκατεστημένο και ενεργοποιημένο."
+
+msgid "Suppliers Manager for WooCommerce requires WooCommerce %2$s or higher. You are running WooCommerce %1$s."
+msgstr "Το Suppliers Manager for WooCommerce απαιτεί WooCommerce %2$s ή νεότερη έκδοση. Χρησιμοποιείτε WooCommerce %1$s."
+
+#: admin/class-admin.php
+msgctxt "taxonomy general name"
+msgid "Suppliers"
+msgstr "Προμηθευτές"
+
+msgctxt "taxonomy singular name"
+msgid "Supplier"
+msgstr "Προμηθευτής"
+
+msgid "Search Suppliers"
+msgstr "Αναζήτηση Προμηθευτών"
+
+msgid "All Suppliers"
+msgstr "Όλοι οι Προμηθευτές"
+
+msgid "Parent Supplier"
+msgstr "Γονικός Προμηθευτής"
+
+msgid "Parent Supplier:"
+msgstr "Γονικός Προμηθευτής:"
+
+msgid "Edit Supplier"
+msgstr "Επεξεργασία Προμηθευτή"
+
+msgid "Update Supplier"
+msgstr "Ενημέρωση Προμηθευτή"
+
+msgid "Add New Supplier"
+msgstr "Προσθήκη Νέου Προμηθευτή"
+
+msgid "New Supplier Name"
+msgstr "Όνομα Νέου Προμηθευτή"
+
+msgid "Telephone"
+msgstr "Τηλέφωνο"
+
+msgid "The supplier's telephone number"
+msgstr "Ο αριθμός τηλεφώνου του προμηθευτή"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "The supplier's email address (required for notifications)"
+msgstr "Η διεύθυνση email του προμηθευτή (απαιτείται για ειδοποιήσεις)"
+
+msgid "Address"
+msgstr "Διεύθυνση"
+
+msgid "The supplier's physical address"
+msgstr "Η φυσική διεύθυνση του προμηθευτή"
+
+msgid "Primary Contact"
+msgstr "Κύριος Υπεύθυνος Επικοινωνίας"
+
+msgid "The supplier's primary contact person"
+msgstr "Το κύριο άτομο επικοινωνίας του προμηθευτή"
+
+msgid "Notify supplier on low stock"
+msgstr "Ειδοποίηση προμηθευτή σε χαμηλό απόθεμα"
+
+msgid "Check this to notify the supplier when this product is out of stock"
+msgstr "Επιλέξτε αυτό για να ειδοποιηθεί ο προμηθευτής όταν αυτό το προϊόν εξαντλείται"
+
+msgid "Notify suppliers"
+msgstr "Ειδοποίηση προμηθευτών"
+
+#: includes/emails/class-supplier-email.php
+msgid "Supplier Order Notification"
+msgstr "Ειδοποίηση Παραγγελίας Προμηθευτή"
+
+msgid "Email notifications sent to suppliers when orders containing their products are placed."
+msgstr "Ειδοποιήσεις email που αποστέλλονται στους προμηθευτές όταν γίνονται παραγγελίες με τα προϊόντα τους."
+
+msgid "New order #{order_number} from {site_title}"
+msgstr "Νέα παραγγελία #{order_number} από {site_title}"
+
+msgid "New Order Notification"
+msgstr "Ειδοποίηση Νέας Παραγγελίας"
+
+msgid "Enable/Disable"
+msgstr "Ενεργοποίηση/Απενεργοποίηση"
+
+msgid "Enable this email notification"
+msgstr "Ενεργοποίηση αυτής της ειδοποίησης email"
+
+msgid "Subject"
+msgstr "Θέμα"
+
+msgid "Available placeholders: %s"
+msgstr "Διαθέσιμα placeholders: %s"
+
+msgid "Email heading"
+msgstr "Επικεφαλίδα email"
+
+msgid "Additional content"
+msgstr "Πρόσθετο περιεχόμενο"
+
+msgid "Text to appear below the order table."
+msgstr "Κείμενο που θα εμφανίζεται κάτω από τον πίνακα παραγγελίας."
+
+msgid "N/A"
+msgstr "Μ/Δ"
+
+msgid "Email type"
+msgstr "Τύπος email"
+
+msgid "Choose format for the email to be sent."
+msgstr "Επιλέξτε μορφή για το email που θα σταλεί."
+
+#: templates/emails/supplier-notification.php
+#: templates/emails/plain/supplier-notification.php
+msgid "Hello %s,"
+msgstr "Γεια σας %s,"
+
+msgid "A new order has been placed with products from your inventory. Please find the order details below:"
+msgstr "Μια νέα παραγγελία έχει καταχωρηθεί με προϊόντα από το απόθεμά σας. Παρακαλώ βρείτε τις λεπτομέρειες παραγγελίας παρακάτω:"
+
+msgid "Order #%s"
+msgstr "Παραγγελία #%s"
+
+msgid "Product"
+msgstr "Προϊόν"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Quantity"
+msgstr "Ποσότητα"
+
+msgid "If you have any questions, please contact us at %s"
+msgstr "Εάν έχετε οποιεσδήποτε ερωτήσεις, επικοινωνήστε μαζί μας στο %s"
+
+msgid "Thank you for your continued partnership."
+msgstr "Ευχαριστούμε για τη συνεχιζόμενη συνεργασία σας."
+
+#: admin/class-settings.php
+msgid "Suppliers Manager Settings"
+msgstr "Ρυθμίσεις Διαχειριστή Προμηθευτών"
+
+msgid "Suppliers Manager"
+msgstr "Διαχειριστής Προμηθευτών"
+
+msgid "General Settings"
+msgstr "Γενικές Ρυθμίσεις"
+
+msgid "Configure when and how supplier notifications are sent."
+msgstr "Ρυθμίστε πότε και πώς αποστέλλονται οι ειδοποιήσεις προμηθευτών."
+
+msgid "Email History Settings"
+msgstr "Ρυθμίσεις Ιστορικού Email"
+
+msgid "Manage email history and logging settings."
+msgstr "Διαχειριστείτε το ιστορικό email και τις ρυθμίσεις καταγραφής."
+
+msgid "Notification Order Status"
+msgstr "Κατάσταση Παραγγελίας Ειδοποίησης"
+
+msgid "Select the order status that triggers supplier notifications."
+msgstr "Επιλέξτε την κατάσταση παραγγελίας που ενεργοποιεί τις ειδοποιήσεις προμηθευτών."
+
+msgid "Send Copy to Admin"
+msgstr "Αποστολή Αντιγράφου στον Διαχειριστή"
+
+msgid "Send a copy of all supplier emails to admin"
+msgstr "Αποστολή αντιγράφου όλων των email προμηθευτών στον διαχειριστή"
+
+msgid "When enabled, a copy of each supplier notification will be sent to the admin email address."
+msgstr "Όταν είναι ενεργοποιημένο, θα αποστέλλεται αντίγραφο κάθε ειδοποίησης προμηθευτή στη διεύθυνση email διαχειριστή."
+
+msgid "Admin Email Address"
+msgstr "Διεύθυνση Email Διαχειριστή"
+
+msgid "Email address to receive copies of supplier notifications."
+msgstr "Διεύθυνση email για λήψη αντιγράφων ειδοποιήσεων προμηθευτών."
+
+msgid "Enable Email History"
+msgstr "Ενεργοποίηση Ιστορικού Email"
+
+msgid "Keep a log of all sent supplier emails"
+msgstr "Διατήρηση αρχείου όλων των απεσταλμένων email προμηθευτών"
+
+msgid "When enabled, all supplier notifications will be logged in the database for future reference."
+msgstr "Όταν είναι ενεργοποιημένο, όλες οι ειδοποιήσεις προμηθευτών θα καταγράφονται στη βάση δεδομένων για μελλοντική αναφορά."
+
+msgid "History Retention Period"
+msgstr "Περίοδος Διατήρησης Ιστορικού"
+
+msgid "days"
+msgstr "ημέρες"
+
+msgid "Email history older than this will be automatically deleted. Default: 90 days."
+msgstr "Το ιστορικό email παλαιότερο από αυτό θα διαγράφεται αυτόματα. Προεπιλογή: 90 ημέρες."
+
+msgid "Save Settings"
+msgstr "Αποθήκευση Ρυθμίσεων"
+
+msgid "Quick Links"
+msgstr "Γρήγοροι Σύνδεσμοι"
+
+msgid "View Email History"
+msgstr "Προβολή Ιστορικού Email"
+
+msgid "Manage Suppliers"
+msgstr "Διαχείριση Προμηθευτών"
+
+msgid "Email Template Settings"
+msgstr "Ρυθμίσεις Προτύπου Email"
+
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Δεν έχετε επαρκή δικαιώματα για να αποκτήσετε πρόσβαση σε αυτήν τη σελίδα."
+
+#: admin/class-email-history.php
+msgid "Supplier Email History"
+msgstr "Ιστορικό Email Προμηθευτών"
+
+msgid "Email History"
+msgstr "Ιστορικό Email"
+
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgid "Total Sent"
+msgstr "Σύνολο Απεσταλμένων"
+
+msgid "This Month"
+msgstr "Αυτόν τον Μήνα"
+
+msgid "Today"
+msgstr "Σήμερα"
+
+msgid "Failed"
+msgstr "Αποτυχία"
+
+msgctxt "email history filter"
+msgid "All Suppliers"
+msgstr "Όλοι οι Προμηθευτές"
+
+msgid "All Statuses"
+msgstr "Όλες οι Καταστάσεις"
+
+msgid "Sent"
+msgstr "Απεστάλη"
+
+msgid "Filter"
+msgstr "Φίλτρο"
+
+msgid "Clear Filters"
+msgstr "Εκκαθάριση Φίλτρων"
+
+msgid "Order"
+msgstr "Παραγγελία"
+
+msgid "Recipient"
+msgstr "Παραλήπτης"
+
+msgid "Items"
+msgstr "Είδη"
+
+msgid "Status"
+msgstr "Κατάσταση"
+
+msgid "Sent At"
+msgstr "Απεστάλη Στις"
+
+msgid "No email history found."
+msgstr "Δεν βρέθηκε ιστορικό email."
