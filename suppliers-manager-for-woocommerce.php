@@ -36,7 +36,7 @@ if (!defined('WPINC')) {
 /**
  * Plugin version
  */
-define('SMFW_VERSION', '3.0.0');
+define('SMFW_VERSION', '3.0.2');
 
 /**
  * Plugin directory path
@@ -83,7 +83,7 @@ function smfw_check_requirements(): bool
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 sprintf(
-                    /* translators: 1: Current PHP version, 2: Required PHP version */
+                /* translators: 1: Current PHP version, 2: Required PHP version */
                     esc_html__('Suppliers Manager for WooCommerce requires PHP %2$s or higher. You are running PHP %1$s.', 'suppliers-manager-for-woocommerce'),
                     esc_html(PHP_VERSION),
                     esc_html(SMFW_MIN_PHP_VERSION)
@@ -99,7 +99,7 @@ function smfw_check_requirements(): bool
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 sprintf(
-                    /* translators: 1: Current WordPress version, 2: Required WordPress version */
+                /* translators: 1: Current WordPress version, 2: Required WordPress version */
                     esc_html__('Suppliers Manager for WooCommerce requires WordPress %2$s or higher. You are running WordPress %1$s.', 'suppliers-manager-for-woocommerce'),
                     esc_html($wp_version),
                     esc_html(SMFW_MIN_WP_VERSION)
@@ -126,7 +126,7 @@ function smfw_check_requirements(): bool
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 sprintf(
-                    /* translators: 1: Current WooCommerce version, 2: Required WooCommerce version */
+                /* translators: 1: Current WooCommerce version, 2: Required WooCommerce version */
                     esc_html__('Suppliers Manager for WooCommerce requires WooCommerce %2$s or higher. You are running WooCommerce %1$s.', 'suppliers-manager-for-woocommerce'),
                     esc_html(WC_VERSION),
                     esc_html(SMFW_MIN_WC_VERSION)
