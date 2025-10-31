@@ -213,19 +213,20 @@ class Admin
      */
     public function handle_product_bulk_actions(string $redirect_to, string $action, array $post_ids): string
     {
-        // Check if this is one of our bulk actions
         if (!in_array($action, ['smfw_bulk_add_suppliers', 'smfw_bulk_remove_suppliers', 'smfw_bulk_replace_suppliers'], true)) {
             return $redirect_to;
         }
 
-        // Store selected product IDs in transient
+        // Capture current post_status filter to restore it after redirect
+        $post_status = isset($_GET['post_status']) ? sanitize_text_field(wp_unslash($_GET['post_status'])) : '';
+
         $transient_key = 'smfw_bulk_edit_' . get_current_user_id();
         set_transient($transient_key, [
             'action' => $action,
             'product_ids' => $post_ids,
-        ], 300); // 5 minutes
+            'post_status' => $post_status, // Store original filter
+        ], 300);
 
-        // Redirect to our bulk edit page
         return admin_url('admin.php?page=smfw-bulk-edit&transient=' . urlencode($transient_key));
     }
 
@@ -238,7 +239,7 @@ class Admin
     public function add_bulk_edit_page(): void
     {
         add_submenu_page(
-            null, // Hidden from menu
+            null,
             __('Bulk Edit Suppliers', 'suppliers-manager-for-woocommerce'),
             __('Bulk Edit Suppliers', 'suppliers-manager-for-woocommerce'),
             'edit_products',
@@ -259,7 +260,6 @@ class Admin
             wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'suppliers-manager-for-woocommerce'));
         }
 
-        // Get transient data
         $transient_key = isset($_GET['transient']) ? sanitize_text_field(wp_unslash($_GET['transient'])) : '';
         $data = get_transient($transient_key);
 
@@ -270,7 +270,6 @@ class Admin
         $action = $data['action'];
         $product_ids = $data['product_ids'];
 
-        // Get all suppliers
         $suppliers = get_posts([
             'post_type'      => 'supplier',
             'post_status'    => 'publish',
@@ -279,17 +278,22 @@ class Admin
             'order'          => 'ASC',
         ]);
 
-        // Analyze supplier assignments across selected products
         $supplier_stats = $this->analyze_supplier_assignments($product_ids, $suppliers);
 
-        // Determine action title
         $action_titles = [
             'smfw_bulk_add_suppliers' => __('Add Suppliers to Products', 'suppliers-manager-for-woocommerce'),
             'smfw_bulk_remove_suppliers' => __('Remove Suppliers from Products', 'suppliers-manager-for-woocommerce'),
             'smfw_bulk_replace_suppliers' => __('Replace Suppliers for Products', 'suppliers-manager-for-woocommerce'),
         ];
 
+        $action_descriptions = [
+            'smfw_bulk_add_suppliers' => __('Select suppliers to add to the selected products. Existing suppliers will be preserved.', 'suppliers-manager-for-woocommerce'),
+            'smfw_bulk_remove_suppliers' => __('Currently assigned suppliers are pre-checked below. KEEP CHECKED the suppliers you want to REMOVE. Uncheck any you want to keep.', 'suppliers-manager-for-woocommerce'),
+            'smfw_bulk_replace_suppliers' => __('Select suppliers to replace all existing suppliers for the selected products. Assignment counts show current assignments.', 'suppliers-manager-for-woocommerce'),
+        ];
+
         $page_title = $action_titles[$action] ?? __('Bulk Edit Suppliers', 'suppliers-manager-for-woocommerce');
+        $page_description = $action_descriptions[$action] ?? '';
 
         ?>
         <div class="wrap">
@@ -326,23 +330,38 @@ class Admin
                                 </th>
                                 <td>
                                     <fieldset>
-                                        <p class="description" style="margin-bottom: 15px;">
-                                            <?php
-                                            if ($action === 'smfw_bulk_add_suppliers') {
-                                                esc_html_e('Select suppliers to add to the selected products. Existing suppliers will be preserved.', 'suppliers-manager-for-woocommerce');
-                                            } elseif ($action === 'smfw_bulk_remove_suppliers') {
-                                                esc_html_e('Checked suppliers are currently assigned to one or more selected products. Select suppliers to remove.', 'suppliers-manager-for-woocommerce');
-                                            } else {
-                                                esc_html_e('Select suppliers to replace all existing suppliers for the selected products.', 'suppliers-manager-for-woocommerce');
-                                            }
-                                            ?>
-                                        </p>
+                                        <!-- Enhanced description with visual emphasis for Remove action -->
+                                        <?php if ($action === 'smfw_bulk_remove_suppliers') : ?>
+                                            <div style="background: #fff3cd; border-left: 4px solid #f0ad4e; padding: 12px 15px; margin-bottom: 15px; border-radius: 3px;">
+                                                <p style="margin: 0; font-weight: 600; color: #856404;">
+                                                    ⚠️ <?php esc_html_e('Important: How Removal Works', 'suppliers-manager-for-woocommerce'); ?>
+                                                </p>
+                                                <p style="margin: 8px 0 0 0; color: #856404;">
+                                                    <?php echo esc_html($page_description); ?>
+                                                </p>
+                                            </div>
+                                        <?php else : ?>
+                                            <p class="description" style="margin-bottom: 15px;">
+                                                <?php echo esc_html($page_description); ?>
+                                            </p>
+                                        <?php endif; ?>
 
-                                        <?php if ($action === 'smfw_bulk_remove_suppliers' && !empty($supplier_stats['has_suppliers'])) : ?>
+                                        <?php
+                                        $show_legend = in_array($action, ['smfw_bulk_remove_suppliers', 'smfw_bulk_replace_suppliers'], true)
+                                            && !empty($supplier_stats['has_suppliers']);
+                                        ?>
+
+                                        <?php if ($show_legend) : ?>
                                             <div class="notice notice-info inline" style="margin-bottom: 15px;">
                                                 <p>
                                                     <strong><?php esc_html_e('Legend:', 'suppliers-manager-for-woocommerce'); ?></strong>
-                                                    <?php esc_html_e('The number in parentheses shows how many products have each supplier assigned.', 'suppliers-manager-for-woocommerce'); ?>
+                                                    <?php
+                                                    if ($action === 'smfw_bulk_remove_suppliers') {
+                                                        esc_html_e('Pre-checked suppliers are currently assigned. The number shows how many products have each supplier.', 'suppliers-manager-for-woocommerce');
+                                                    } else {
+                                                        esc_html_e('The number in parentheses shows how many products currently have each supplier assigned.', 'suppliers-manager-for-woocommerce');
+                                                    }
+                                                    ?>
                                                 </p>
                                             </div>
                                         <?php endif; ?>
@@ -354,13 +373,13 @@ class Admin
                                                 $assigned_count = $supplier_stats['assignments'][$supplier->ID] ?? 0;
                                                 $is_assigned = $assigned_count > 0;
 
-                                                // For remove action, pre-check suppliers that are assigned
                                                 $should_check = ($action === 'smfw_bulk_remove_suppliers' && $is_assigned);
 
-                                                // Highlight assigned suppliers for remove action
                                                 $item_style = '';
                                                 if ($action === 'smfw_bulk_remove_suppliers' && $is_assigned) {
                                                     $item_style = 'background: #fff3cd; border-color: #ffc107;';
+                                                } elseif ($action === 'smfw_bulk_replace_suppliers' && $is_assigned) {
+                                                    $item_style = 'background: #e7f3ff; border-color: #72aee6;';
                                                 }
                                                 ?>
                                                 <label style="display: block; margin-bottom: 12px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; <?php echo esc_attr($item_style); ?>">
@@ -376,21 +395,22 @@ class Admin
 
                                                     <strong><?php echo esc_html($supplier->post_title); ?></strong>
 
-                                                    <?php if ($action === 'smfw_bulk_remove_suppliers' && $is_assigned) : ?>
-                                                        <span style="color: #d63638; font-weight: 600; margin-left: 8px;">
-    															(<?php
-                                                            printf(
-                                                            /* translators: 1: assigned count, 2: total products */
-                                                                esc_html__('%1$d/%2$d products', 'suppliers-manager-for-woocommerce'),
-                                                                $assigned_count,
-                                                                count($product_ids)
-                                                            );
-                                                            ?>)
-    														</span>
-                                                    <?php elseif ($action === 'smfw_bulk_remove_suppliers') : ?>
-                                                        <span style="color: #999; font-style: italic; margin-left: 8px;">
-    															<?php esc_html_e('(Not assigned)', 'suppliers-manager-for-woocommerce'); ?>
-    														</span>
+                                                    <?php if (in_array($action, ['smfw_bulk_remove_suppliers', 'smfw_bulk_replace_suppliers'], true)) : ?>
+                                                        <?php if ($is_assigned) : ?>
+                                                            <span style="<?php echo $action === 'smfw_bulk_remove_suppliers' ? 'color: #d63638;' : 'color: #0073aa;'; ?> font-weight: 600; margin-left: 8px;">
+																(<?php
+                                                                printf(
+                                                                    esc_html__('%1$d/%2$d products', 'suppliers-manager-for-woocommerce'),
+                                                                    $assigned_count,
+                                                                    count($product_ids)
+                                                                );
+                                                                ?>)
+															</span>
+                                                        <?php else : ?>
+                                                            <span style="color: #999; font-style: italic; margin-left: 8px;">
+																<?php esc_html_e('(Not assigned)', 'suppliers-manager-for-woocommerce'); ?>
+															</span>
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
 
                                                     <?php if ($supplier_email) : ?>
@@ -408,11 +428,6 @@ class Admin
                                             <button type="button" class="button" onclick="jQuery('input[name=\'supplier_ids[]\']').prop('checked', false);">
                                                 <?php esc_html_e('Deselect All', 'suppliers-manager-for-woocommerce'); ?>
                                             </button>
-                                            <?php if ($action === 'smfw_bulk_remove_suppliers') : ?>
-                                                <button type="button" class="button" onclick="jQuery('input[name=\'supplier_ids[]\']:checked').prop('checked', false);">
-                                                    <?php esc_html_e('Clear Selection', 'suppliers-manager-for-woocommerce'); ?>
-                                                </button>
-                                            <?php endif; ?>
                                         </p>
                                     </fieldset>
                                 </td>
@@ -455,9 +470,17 @@ class Admin
             <div style="background: #f0f0f1; border-left: 4px solid #72aee6; padding: 15px; margin: 20px 0;">
                 <h3 style="margin-top: 0;"><?php esc_html_e('Selected Products', 'suppliers-manager-for-woocommerce'); ?></h3>
 
-                <?php if ($action === 'smfw_bulk_remove_suppliers' && !empty($supplier_stats['has_suppliers'])) : ?>
+                <?php if (in_array($action, ['smfw_bulk_remove_suppliers', 'smfw_bulk_replace_suppliers'], true) && !empty($supplier_stats['has_suppliers'])) : ?>
                     <div style="margin-bottom: 15px; padding: 10px; background: #fff; border: 1px solid #ccd0d4; border-radius: 3px;">
-                        <strong><?php esc_html_e('Current Supplier Summary:', 'suppliers-manager-for-woocommerce'); ?></strong>
+                        <strong>
+                            <?php
+                            if ($action === 'smfw_bulk_remove_suppliers') {
+                                esc_html_e('Current Supplier Assignments:', 'suppliers-manager-for-woocommerce');
+                            } else {
+                                esc_html_e('Current Supplier Summary (will be replaced):', 'suppliers-manager-for-woocommerce');
+                            }
+                            ?>
+                        </strong>
                         <ul style="margin: 10px 0 0 20px;">
                             <?php foreach ($supplier_stats['supplier_names'] as $supplier_id => $supplier_name) : ?>
                                 <?php if (isset($supplier_stats['assignments'][$supplier_id]) && $supplier_stats['assignments'][$supplier_id] > 0) : ?>
@@ -465,7 +488,6 @@ class Admin
                                         <strong><?php echo esc_html($supplier_name); ?>:</strong>
                                         <?php
                                         printf(
-                                        /* translators: 1: assigned count, 2: total products */
                                             esc_html__('Assigned to %1$d of %2$d products', 'suppliers-manager-for-woocommerce'),
                                             $supplier_stats['assignments'][$supplier_id],
                                             count($product_ids)
@@ -526,18 +548,16 @@ class Admin
     private function analyze_supplier_assignments(array $product_ids, array $suppliers): array
     {
         $stats = [
-            'assignments' => [],      // supplier_id => count of products
-            'has_suppliers' => false, // whether any product has suppliers
-            'supplier_names' => [],   // supplier_id => supplier name
+            'assignments' => [],
+            'has_suppliers' => false,
+            'supplier_names' => [],
         ];
 
-        // Initialize counts
         foreach ($suppliers as $supplier) {
             $stats['assignments'][$supplier->ID] = 0;
             $stats['supplier_names'][$supplier->ID] = $supplier->post_title;
         }
 
-        // Count assignments
         foreach ($product_ids as $product_id) {
             $product_suppliers = $this->relationships->get_product_suppliers($product_id);
 
@@ -563,17 +583,14 @@ class Admin
      */
     public function process_bulk_edit_suppliers(): void
     {
-        // Verify nonce
         if (!isset($_POST['smfw_bulk_edit_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['smfw_bulk_edit_nonce'])), 'smfw_bulk_edit_suppliers')) {
             wp_die(esc_html__('Security check failed.', 'suppliers-manager-for-woocommerce'));
         }
 
-        // Check permissions
         if (!current_user_can('edit_products')) {
             wp_die(esc_html__('You do not have sufficient permissions to perform this action.', 'suppliers-manager-for-woocommerce'));
         }
 
-        // Get data from transient
         $transient_key = isset($_POST['transient_key']) ? sanitize_text_field(wp_unslash($_POST['transient_key'])) : '';
         $data = get_transient($transient_key);
 
@@ -583,12 +600,30 @@ class Admin
 
         $product_ids = $data['product_ids'];
         $action = isset($_POST['bulk_action']) ? sanitize_text_field(wp_unslash($_POST['bulk_action'])) : '';
+        $post_status = isset($data['post_status']) ? $data['post_status'] : ''; // Retrieve original filter
         $supplier_ids = isset($_POST['supplier_ids']) && is_array($_POST['supplier_ids'])
             ? array_map('intval', wp_unslash($_POST['supplier_ids']))
             : [];
         $primary_supplier_id = isset($_POST['primary_supplier_id']) ? intval($_POST['primary_supplier_id']) : 0;
 
-        // Validate that primary supplier is in the selected suppliers
+        if (empty($supplier_ids) && $action === 'smfw_bulk_remove_suppliers') {
+            $redirect_args = [
+                'post_type' => 'product',
+                'smfw_bulk_updated' => 0,
+                'smfw_bulk_errors' => count($product_ids),
+                'smfw_error_message' => 'no_suppliers_selected',
+            ];
+
+            // Preserve post_status filter
+            if (!empty($post_status)) {
+                $redirect_args['post_status'] = $post_status;
+            }
+
+            $redirect_url = add_query_arg($redirect_args, admin_url('edit.php'));
+            wp_safe_redirect($redirect_url);
+            exit;
+        }
+
         if ($primary_supplier_id > 0 && !in_array($primary_supplier_id, $supplier_ids, true)) {
             $primary_supplier_id = 0;
         }
@@ -621,18 +656,32 @@ class Admin
                 }
             } catch (\Exception $e) {
                 $error_count++;
+
+                if (function_exists('wc_get_logger')) {
+                    $wc_logger = wc_get_logger();
+                    $wc_logger->error(
+                        sprintf('Bulk edit error for product #%d: %s', $product_id, $e->getMessage()),
+                        ['source' => 'suppliers-manager']
+                    );
+                }
             }
         }
 
-        // Delete transient
         delete_transient($transient_key);
 
-        // Redirect with success message
-        $redirect_url = add_query_arg([
+        // Build redirect URL with preserved filters
+        $redirect_args = [
             'post_type' => 'product',
             'smfw_bulk_updated' => $success_count,
             'smfw_bulk_errors' => $error_count,
-        ], admin_url('edit.php'));
+        ];
+
+        // Preserve post_status filter if it was set
+        if (!empty($post_status)) {
+            $redirect_args['post_status'] = $post_status;
+        }
+
+        $redirect_url = add_query_arg($redirect_args, admin_url('edit.php'));
 
         wp_safe_redirect($redirect_url);
         exit;
@@ -653,13 +702,9 @@ class Admin
             return false;
         }
 
-        // Get existing suppliers
         $existing_supplier_ids = $this->relationships->get_product_suppliers($product_id);
-
-        // Merge with new suppliers (avoid duplicates)
         $all_supplier_ids = array_unique(array_merge($existing_supplier_ids, $new_supplier_ids));
 
-        // If no primary is set for this product, use the new primary (if provided)
         $current_primary = $this->relationships->get_primary_supplier($product_id);
         if (!$current_primary && $primary_supplier_id > 0) {
             $primary_to_set = $primary_supplier_id;
@@ -684,17 +729,20 @@ class Admin
             return false;
         }
 
-        // Get existing suppliers
         $existing_supplier_ids = $this->relationships->get_product_suppliers($product_id);
 
-        // Remove specified suppliers
-        $remaining_supplier_ids = array_diff($existing_supplier_ids, $suppliers_to_remove);
+        if (empty($existing_supplier_ids)) {
+            return true;
+        }
 
-        // Get current primary (use null coalescing operator to ensure int type)
+        $remaining_supplier_ids = array_values(array_diff($existing_supplier_ids, $suppliers_to_remove));
         $current_primary = $this->relationships->get_primary_supplier($product_id) ?? 0;
 
-        // If primary is being removed, clear it
         if ($current_primary > 0 && in_array($current_primary, $suppliers_to_remove, true)) {
+            $current_primary = 0;
+        }
+
+        if ($current_primary > 0 && !in_array($current_primary, $remaining_supplier_ids, true)) {
             $current_primary = 0;
         }
 
@@ -713,7 +761,6 @@ class Admin
     private function bulk_replace_suppliers(int $product_id, array $new_supplier_ids, int $primary_supplier_id = 0): bool
     {
         if (empty($new_supplier_ids)) {
-            // If empty, remove all suppliers
             return $this->relationships->update_product_suppliers($product_id, [], 0);
         }
 
@@ -734,6 +781,13 @@ class Admin
             return;
         }
 
+        if (isset($_GET['smfw_error_message']) && $_GET['smfw_error_message'] === 'no_suppliers_selected') {
+            printf(
+                '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+                esc_html__('No suppliers were selected. Please select at least one supplier to remove.', 'suppliers-manager-for-woocommerce')
+            );
+        }
+
         if (isset($_GET['smfw_bulk_updated'])) {
             $updated = intval($_GET['smfw_bulk_updated']);
             $errors = isset($_GET['smfw_bulk_errors']) ? intval($_GET['smfw_bulk_errors']) : 0;
@@ -742,7 +796,6 @@ class Admin
                 printf(
                     '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
                     sprintf(
-                    /* translators: %d: number of products updated */
                         esc_html(_n('%d product updated successfully.', '%d products updated successfully.', $updated, 'suppliers-manager-for-woocommerce')),
                         $updated
                     )
@@ -753,7 +806,6 @@ class Admin
                 printf(
                     '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
                     sprintf(
-                    /* translators: %d: number of products with errors */
                         esc_html(_n('%d product failed to update.', '%d products failed to update.', $errors, 'suppliers-manager-for-woocommerce')),
                         $errors
                     )

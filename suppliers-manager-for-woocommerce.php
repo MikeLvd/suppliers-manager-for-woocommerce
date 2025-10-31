@@ -11,7 +11,7 @@
  * Plugin Name:       Suppliers Manager for WooCommerce
  * Plugin URI:        https://goldenbath.gr/
  * Description:       Advanced supplier management with Custom Post Type architecture, rich profiles, document management, and automated notifications.
- * Version:           3.0.2
+ * Version:           3.0.5
  * Requires at least: 5.8
  * Requires PHP:      8.0
  * Author:            Mike Lvd
@@ -36,7 +36,7 @@ if (!defined('WPINC')) {
 /**
  * Plugin version
  */
-define('SMFW_VERSION', '3.0.2');
+define('SMFW_VERSION', '3.0.5');
 
 /**
  * Plugin directory path

@@ -53,17 +53,17 @@ class Supplier_Relationships
         $charset_collate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE IF NOT EXISTS {$this->table_name} (
-            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            product_id bigint(20) unsigned NOT NULL,
-            supplier_id bigint(20) unsigned NOT NULL,
-            is_primary tinyint(1) NOT NULL DEFAULT 0,
-            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY  (id),
-            UNIQUE KEY product_supplier (product_id, supplier_id),
-            KEY product_id (product_id),
-            KEY supplier_id (supplier_id),
-            KEY is_primary (is_primary)
-        ) $charset_collate;";
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			product_id bigint(20) unsigned NOT NULL,
+			supplier_id bigint(20) unsigned NOT NULL,
+			is_primary tinyint(1) NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY  (id),
+			UNIQUE KEY product_supplier (product_id, supplier_id),
+			KEY product_id (product_id),
+			KEY supplier_id (supplier_id),
+			KEY is_primary (is_primary)
+		) $charset_collate;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         dbDelta($sql);
@@ -82,7 +82,6 @@ class Supplier_Relationships
     {
         global $wpdb;
 
-        // If setting as primary, unset other primary relationships for this product
         if ($is_primary) {
             $this->unset_primary_supplier($product_id);
         }
@@ -198,10 +197,8 @@ class Supplier_Relationships
     {
         global $wpdb;
 
-        // First unset all primary flags for this product
         $this->unset_primary_supplier($product_id);
 
-        // Then set the new primary supplier
         $result = $wpdb->update(
             $this->table_name,
             ['is_primary' => 1],
@@ -249,46 +246,60 @@ class Supplier_Relationships
     {
         global $wpdb;
 
-        // Start transaction
-        $wpdb->query('START TRANSACTION');
+        $supplier_ids = array_values(array_map('intval', array_filter($supplier_ids)));
 
-        try {
-            // Delete existing relationships
-            $wpdb->delete(
-                $this->table_name,
-                ['product_id' => $product_id],
-                ['%d']
-            );
+        if ($primary_id > 0 && !in_array($primary_id, $supplier_ids, true)) {
+            $primary_id = 0;
+        }
 
-            // Add new relationships
-            foreach ($supplier_ids as $supplier_id) {
-                $is_primary = ($supplier_id === $primary_id);
-                
-                $result = $wpdb->insert(
-                    $this->table_name,
-                    [
-                        'product_id'  => $product_id,
-                        'supplier_id' => (int) $supplier_id,
-                        'is_primary'  => $is_primary ? 1 : 0,
-                        'created_at'  => current_time('mysql'),
-                    ],
-                    ['%d', '%d', '%d', '%s']
+        $delete_result = $wpdb->delete(
+            $this->table_name,
+            ['product_id' => $product_id],
+            ['%d']
+        );
+
+        if ($delete_result === false) {
+            if (function_exists('wc_get_logger')) {
+                $wc_logger = wc_get_logger();
+                $wc_logger->error(
+                    sprintf('Failed to delete relationships for product #%d: %s', $product_id, $wpdb->last_error),
+                    ['source' => 'suppliers-manager']
                 );
-
-                if ($result === false) {
-                    throw new \Exception('Failed to insert relationship');
-                }
             }
-
-            // Commit transaction
-            $wpdb->query('COMMIT');
-            return true;
-
-        } catch (\Exception $e) {
-            // Rollback on error
-            $wpdb->query('ROLLBACK');
             return false;
         }
+
+        if (empty($supplier_ids)) {
+            return true;
+        }
+
+        foreach ($supplier_ids as $supplier_id) {
+            $is_primary = ($supplier_id === $primary_id);
+
+            $result = $wpdb->insert(
+                $this->table_name,
+                [
+                    'product_id'  => $product_id,
+                    'supplier_id' => $supplier_id,
+                    'is_primary'  => $is_primary ? 1 : 0,
+                    'created_at'  => current_time('mysql'),
+                ],
+                ['%d', '%d', '%d', '%s']
+            );
+
+            if ($result === false) {
+                if (function_exists('wc_get_logger')) {
+                    $wc_logger = wc_get_logger();
+                    $wc_logger->error(
+                        sprintf('Failed to insert relationship for product #%d, supplier #%d: %s', $product_id, $supplier_id, $wpdb->last_error),
+                        ['source' => 'suppliers-manager']
+                    );
+                }
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
